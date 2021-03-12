@@ -10,7 +10,7 @@ namespace PregnancyDemoApp.Queries
         public PregnanciesQuery(IPersonRepository personRepository, IChildbirthRepository birthRepository,
             IPregnancyRepository pregnancyRepository, IObstetricianRepository obstetricianRepository)
         {
-            Name = "PersonsRelationsQuery";
+            Name = "PregnancyQuery";
 
             Field<PersonsType>(
                "person",

@@ -9,9 +9,10 @@ namespace PregnancyDemoApp.Mutations
 {
     public class PregnanciesMutation : ObjectGraphType<object>
     {
-        public PregnanciesMutation(IPersonRepository personRepository, IChildbirthRepository birthRepository)
+        public PregnanciesMutation(IPersonRepository personRepository, IChildbirthRepository birthRepository,
+            IObstetricianRepository obstetricianRepository, IPregnancyRepository pregnancyRepository)
         {
-            Name = "PersonalRelationsMutation";
+            Name = "PregnancyMutation";
 
             #region Person
             FieldAsync<PersonsType>(
@@ -22,7 +23,8 @@ namespace PregnancyDemoApp.Mutations
                 resolve: async context =>
                 {
                     var personInput = context.GetArgument<Person>("person");
-                    return await personRepository.Add(personInput);
+                    await personRepository.Add(personInput);
+                    return $"Person has been created succesfully.";
 
                 }
             );
@@ -49,8 +51,8 @@ namespace PregnancyDemoApp.Mutations
                     personInfoRetrived.LastName = personInput.LastName;
                     personInfoRetrived.Address = personInput.Address;
                     personInfoRetrived.Gender = personInput.Gender;
-
-                    return await personRepository.Update(personInfoRetrived);
+                    await personRepository.Update(personInfoRetrived);
+                    return $"Person ID {personId} with Name {personInfoRetrived.FullName} has been updated succesfully.";
                 }
             );
 
@@ -74,61 +76,176 @@ namespace PregnancyDemoApp.Mutations
             #endregion
 
 
-            //#region Personal Relations
-            //FieldAsync<PersonalRelationsType>(
-            //    "addPersonalRelation",
-            //    arguments: new QueryArguments(new QueryArgument<NonNullGraphType<PersonalRelationsInputType>> { Name = "personalRelation" }),
-            //    resolve: async context =>
-            //    {
-            //        var personalDisease = context.GetArgument<PersonalRelations>("personalRelation");
-            //        return await birthRepository.Add(personalDisease);
-            //    }
-            //);
+            #region Childbirth
+            FieldAsync<ChildbirthsType>(
+                "addChildbirth",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<ChildbirthsInputType>> { Name = "childbirth" }),
+                resolve: async context =>
+                {
+                    var birth = context.GetArgument<Childbirth>("childbirth");
+                    await birthRepository.Add(birth);
+                    return $"Childbirth has been created succesfully.";
+                }
+            );
 
-            //FieldAsync<PersonalRelationsType>(
-            //    "updatePersonalRelation",
-            //    arguments: new QueryArguments(
-            //        new QueryArgument<NonNullGraphType<PersonalRelationsInputType>> { Name = "personalRelation" },
-            //        new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "relationId" }
-            //        ),
-            //    resolve: async context =>
-            //    {
-            //        var relationInput = context.GetArgument<PersonalRelations>("personalRelation");
-            //        var relationId = context.GetArgument<int>("relationId");
+            FieldAsync<ChildbirthsType>(
+                "updateChildbirth",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<ChildbirthsInputType>> { Name = "childbirth" },
+                    new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "birthId" }
+                    ),
+                resolve: async context =>
+                {
+                    var birthInput = context.GetArgument<Childbirth>("childbirth");
+                    var birthId = context.GetArgument<int>("birthId");
 
-            //        var relationInfoRetrived = await birthRepository.GetById(relationId);
-            //        if (relationInfoRetrived == null)
-            //        {
-            //            context.Errors.Add(new ExecutionError("Couldn't find Relation info."));
-            //            return null;
-            //        }
-            //        relationInfoRetrived.PersonId = relationInput.PersonId;
-            //        relationInfoRetrived.RelativeId = relationInput.RelativeId;
-            //        relationInfoRetrived.RelationType = relationInput.RelationType;
-            //        relationInfoRetrived.ReverseRelationType = relationInput.ReverseRelationType;
+                    var birthInfoRetrived = await birthRepository.GetById(birthId);
+                    if (birthInfoRetrived == null)
+                    {
+                        context.Errors.Add(new ExecutionError("Couldn't find Birth info."));
+                        return null;
+                    }
+                    birthInfoRetrived.Notes = birthInput.Notes;
+                    birthInfoRetrived.PregnancyId = birthInput.PregnancyId;
+                    birthInfoRetrived.StartDate = birthInput.StartDate;
+                    birthInfoRetrived.EndDate = birthInput.EndDate;
+                    await birthRepository.Update(birthInfoRetrived);
+                    return $"Childbirth ID {birthId} has been updated succesfully.";
+                }
+            );
 
-            //        return await birthRepository.Update(relationInfoRetrived);
-            //    }
-            //);
+            FieldAsync<StringGraphType>(
+                "deleteChildbirth",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "birthId" }),
+                resolve: async context =>
+                {
+                    var birthId = context.GetArgument<int>("birthId");
 
-            //FieldAsync<StringGraphType>(
-            //    "deletePersonalRelation",
-            //    arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "personalRelationId" }),
-            //    resolve: async context =>
-            //    {
-            //        var relationId = context.GetArgument<int>("personalRelationId");
+                    var birthInfoRetrived = await birthRepository.GetById(birthId);
+                    if (birthInfoRetrived == null)
+                    {
+                        context.Errors.Add(new ExecutionError("Couldn't find Birth info."));
+                        return null;
+                    }
+                    await birthRepository.Delete(birthId);
+                    return $"Childbirth ID {birthId} has been deleted succesfully.";
+                }
+            );
+            #endregion
 
-            //        var relationInfoRetrived = await birthRepository.GetById(relationId);
-            //        if (relationInfoRetrived == null)
-            //        {
-            //            context.Errors.Add(new ExecutionError("Couldn't find Personal Relation info."));
-            //            return null;
-            //        }
-            //        await birthRepository.Delete(relationId);
-            //        return $"Personal Relation ID {relationId} has been deleted succesfully.";
-            //    }
-            //);
-            //#endregion
+
+            #region Pregnancy
+            FieldAsync<PregnanciesType>(
+                "addPregnancy",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<PregnanciesInputType>> { Name = "pregnancy" }),
+                resolve: async context =>
+                {
+                    var pregnancy = context.GetArgument<Pregnancy>("pregnancy");
+                    await pregnancyRepository.Add(pregnancy);
+                    return $"Pregnancy has been created succesfully.";
+                }
+            );
+
+            FieldAsync<PregnanciesType>(
+                "updatePregnancy",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<PregnanciesInputType>> { Name = "pregnancy" },
+                    new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "pregnancyId" }
+                    ),
+                resolve: async context =>
+                {
+                    var pregnancyInput = context.GetArgument<Pregnancy>("pregnancy");
+                    var pregnancyId = context.GetArgument<int>("pregnancyId");
+
+                    var pregnancyInfoRetrived = await pregnancyRepository.GetById(pregnancyId);
+                    if (pregnancyInfoRetrived == null)
+                    {
+                        context.Errors.Add(new ExecutionError("Couldn't find Pregnancy info."));
+                        return null;
+                    }
+                    pregnancyInfoRetrived.MotherId = pregnancyInput.MotherId;
+                    pregnancyInfoRetrived.ObstetricianId = pregnancyInput.ObstetricianId;
+                    pregnancyInfoRetrived.DueDate = pregnancyInput.DueDate;
+                    pregnancyInfoRetrived.StartDate = pregnancyInput.StartDate;
+                    pregnancyInfoRetrived.EndDate = pregnancyInput.EndDate;
+                    await pregnancyRepository.Update(pregnancyInfoRetrived);
+                    return $"Pregnancy ID {pregnancyId} has been updated succesfully.";
+                }
+            );
+
+            FieldAsync<StringGraphType>(
+                "deletePregnancy",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "PregnancyId" }),
+                resolve: async context =>
+                {
+                    var pregnancyId = context.GetArgument<int>("PregnancyId");
+
+                    var pregnancyInfoRetrived = await pregnancyRepository.GetById(pregnancyId);
+                    if (pregnancyInfoRetrived == null)
+                    {
+                        context.Errors.Add(new ExecutionError("Couldn't find Pregnancy info."));
+                        return null;
+                    }
+                    await pregnancyRepository.Delete(pregnancyId);
+                    return $"Pregnancy ID {pregnancyId} has been deleted succesfully.";
+                }
+            );
+            #endregion
+
+
+            #region Obstetrician
+            FieldAsync<ObstetriciansType>(
+                "addObstetrician",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<ObstetriciansInputType>> { Name = "obstetrician" }),
+                resolve: async context =>
+                {
+                    var obstetricianDisease = context.GetArgument<Obstetrician>("obstetrician");
+                    await obstetricianRepository.Add(obstetricianDisease);
+                    return $"Obstetrician has been created succesfully.";
+                }
+            );
+
+            FieldAsync<ObstetriciansType>(
+                "updateObstetrician",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<ObstetriciansInputType>> { Name = "obstetrician" },
+                    new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "obstetricianId" }
+                    ),
+                resolve: async context =>
+                {
+                    var obstetricianInput = context.GetArgument<Obstetrician>("obstetrician");
+                    var obstetricianId = context.GetArgument<int>("obstetricianId");
+
+                    var obstetricianInfoRetrived = await obstetricianRepository.GetById(obstetricianId);
+                    if (obstetricianInfoRetrived == null)
+                    {
+                        context.Errors.Add(new ExecutionError("Couldn't find Obstetrician info."));
+                        return null;
+                    }
+                    obstetricianInfoRetrived.PersonId = obstetricianInput.PersonId;
+                    await obstetricianRepository.Update(obstetricianInfoRetrived);
+                    return $"Obstetrician ID {obstetricianId} has been updated succesfully.";
+                }
+            );
+
+            FieldAsync<StringGraphType>(
+                "deleteObstetrician",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "obstetricianId" }),
+                resolve: async context =>
+                {
+                    var obstetricianId = context.GetArgument<int>("obstetricianId");
+
+                    var obstetricianInfoRetrived = await obstetricianRepository.GetById(obstetricianId);
+                    if (obstetricianInfoRetrived == null)
+                    {
+                        context.Errors.Add(new ExecutionError("Couldn't find Obstetrician info."));
+                        return null;
+                    }
+                    await obstetricianRepository.Delete(obstetricianId);
+                    return $"Obstetrician ID {obstetricianId} has been deleted succesfully.";
+                }
+            );
+            #endregion
         }
     }
 }
