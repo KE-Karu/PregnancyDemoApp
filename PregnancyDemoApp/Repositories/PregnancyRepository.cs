@@ -1,6 +1,8 @@
-﻿using PregnancyDemoApp.AppDbContext;
+﻿using Microsoft.EntityFrameworkCore;
+using PregnancyDemoApp.AppDbContext;
 using PregnancyDemoApp.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PregnancyDemoApp.Repositories
@@ -8,21 +10,23 @@ namespace PregnancyDemoApp.Repositories
     public sealed class PregnancyRepository : UniqueEntityRepository<Pregnancy>, IPregnancyRepository
     {
         private readonly PregnancyDbContext context;
+        //private List<Pregnancy> preg;
+
         public PregnancyRepository(PregnancyDbContext con) : base(con, con.Pregnancies) { context = con; }
         
-        public Task<IReadOnlyCollection<Person>> GetMotherByPregnancyId(int pregnancyId)
+        public async Task<IReadOnlyCollection<Person>> GetMotherByPregnancyId(int motherId)
         {
-            throw new System.NotImplementedException();
+            return await context.Persons.Where(o => o.Id == motherId).ToListAsync();
         }
 
-        public Task<IReadOnlyCollection<Pregnancy>> GetPregnanciesByMotherId(int id)
+        public async Task<IReadOnlyCollection<Pregnancy>> GetPregnanciesByMotherId(int motherId)
         {
-            throw new System.NotImplementedException();
+            return await context.Pregnancies.Where(o => o.MotherId == motherId).ToListAsync();
         }
 
-        public Task<IReadOnlyCollection<Pregnancy>> GetPregnanciesByObstetricianId(int id)
+        public async Task<IReadOnlyCollection<Pregnancy>> GetPregnanciesByObstetricianId(int obId)
         {
-            throw new System.NotImplementedException();
+            return await context.Pregnancies.Where(o => o.ObstetricianId == obId).ToListAsync();
         }
     }
 }

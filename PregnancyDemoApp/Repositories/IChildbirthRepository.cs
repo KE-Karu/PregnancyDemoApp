@@ -6,7 +6,5 @@ namespace PregnancyDemoApp.Repositories
 {
     public interface IChildbirthRepository : IRepository<Childbirth>
     {
-        //Siia meetod
-        Task<IReadOnlyCollection<Childbirth>> GetBirthByPregnancyId(int id);
     }
 }

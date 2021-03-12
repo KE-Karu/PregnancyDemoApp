@@ -22,7 +22,7 @@ namespace PregnancyDemoApp.AppDbContext
         {
             if (builder is null) return;
             builder.Entity<Person>().ToTable(nameof(Persons)).HasIndex(a => a.NatIdNr).IsUnique();
-            builder.Entity<Childbirth>().ToTable(nameof(Childbirths)).HasOne(x => x.Pregnancy).WithOne(c => c.Childbirth);
+            builder.Entity<Childbirth>().ToTable(nameof(Childbirths));
             builder.Entity<Pregnancy>().ToTable(nameof(Pregnancies)).HasOne(x => x.Childbirth).WithOne(c => c.Pregnancy);
             builder.Entity<Obstetrician>().ToTable(nameof(Obstetricians)).HasOne(x => x.Person);
         }

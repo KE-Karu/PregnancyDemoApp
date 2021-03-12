@@ -106,7 +106,7 @@ namespace PregnancyDemoApp.Mutations
                         return null;
                     }
                     birthInfoRetrived.Notes = birthInput.Notes;
-                    birthInfoRetrived.PregnancyId = birthInput.PregnancyId;
+                    //birthInfoRetrived.PregnancyId = birthInput.PregnancyId;
                     birthInfoRetrived.StartDate = birthInput.StartDate;
                     birthInfoRetrived.EndDate = birthInput.EndDate;
                     await birthRepository.Update(birthInfoRetrived);
@@ -165,6 +165,7 @@ namespace PregnancyDemoApp.Mutations
                     }
                     pregnancyInfoRetrived.MotherId = pregnancyInput.MotherId;
                     pregnancyInfoRetrived.ObstetricianId = pregnancyInput.ObstetricianId;
+                    pregnancyInfoRetrived.ChildbirthId = pregnancyInput.ChildbirthId;
                     pregnancyInfoRetrived.DueDate = pregnancyInput.DueDate;
                     pregnancyInfoRetrived.StartDate = pregnancyInput.StartDate;
                     pregnancyInfoRetrived.EndDate = pregnancyInput.EndDate;

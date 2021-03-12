@@ -1,6 +1,9 @@
 ﻿using GraphQL.Types;
+using Microsoft.EntityFrameworkCore;
+using PregnancyDemoApp.AppDbContext;
 using PregnancyDemoApp.Models;
 using PregnancyDemoApp.Repositories;
+using System;
 using System.Collections.Generic;
 
 namespace PregnancyDemoApp.Types
@@ -20,16 +23,14 @@ namespace PregnancyDemoApp.Types
             {
                 return obstetricianRepository.GetById(ctx.Source.ObstetricianId);
             });
-            Field(x => x.StartDate).Description("Starting Date of Pregnancy");
-            Field(x => x.EndDate).Description("Ending Date of Pregnancy");
+            Field(x => x.ChildbirthId, type: typeof(IdGraphType)).Description("Birth Id");
+            FieldAsync<ChildbirthsType, Childbirth>("birth", resolve: ctx =>
+            {
+                return birthRepository.GetById(ctx.Source.ChildbirthId);
+            });
+            Field(x => x.StartDate, nullable:true).Description("Starting Date of Pregnancy");
+            Field(x => x.EndDate, nullable: true).Description("Ending Date of Pregnancy");
             Field(x => x.DueDate).Description("Estimated Due Date");
-
-            FieldAsync<ListGraphType<ChildbirthsType>, IReadOnlyCollection<Childbirth>>(
-                "relatedBirth", "returns related birth info",
-                resolve: context =>
-                {
-                    return birthRepository.GetBirthByPregnancyId(context.Source.Id);
-                });
         }
     }
 }

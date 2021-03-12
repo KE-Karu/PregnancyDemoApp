@@ -10,7 +10,7 @@
 
         public string Notes { get; set; }
         // 1-1 suhe rasedusega
-        public int PregnancyId { get; set; }
+        //public int PregnancyId { get; set; }
         public Pregnancy Pregnancy { get; set; }
     }
 }

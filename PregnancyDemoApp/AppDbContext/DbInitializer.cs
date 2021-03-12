@@ -48,8 +48,8 @@ namespace PregnancyDemoApp.AppDbContext
             }
             var pregnancies = new Pregnancy[]
             {
-                new Pregnancy{ MotherId = 3, ObstetricianId = 1, DueDate= DateTime.Parse("1-1-2022"), StartDate= DateTime.Parse("1-5-2021"), EndDate = DateTime.Parse("2-1-2022")},
-                new Pregnancy{ MotherId = 4, ObstetricianId = 2, DueDate= DateTime.Parse("2-2-2022"), StartDate = DateTime.Parse("1-6-2021"), EndDate = null},
+                new Pregnancy{ MotherId = 3, ObstetricianId = 1, ChildbirthId = 1 , DueDate= DateTime.Parse("1-1-2022"), StartDate= DateTime.Parse("1-5-2021"), EndDate = DateTime.Parse("2-1-2022")},
+                new Pregnancy{ MotherId = 4, ObstetricianId = 2, ChildbirthId = 2 , DueDate= DateTime.Parse("2-2-2022"), StartDate = DateTime.Parse("1-6-2021"), EndDate = null},
                
             };
             foreach (Pregnancy p in pregnancies)
@@ -66,8 +66,8 @@ namespace PregnancyDemoApp.AppDbContext
             }
             var childbirths = new Childbirth[]
             {
-                new Childbirth{ PregnancyId = 1, Notes = "Some notes", StartDate= DateTime.Parse("1-1-2022"), EndDate = DateTime.Parse("2-1-2022")},
-                new Childbirth{ PregnancyId = 2, Notes = "More notes", StartDate= null, EndDate = null},
+                new Childbirth{ Notes = "Some notes", StartDate= DateTime.Parse("1-1-2022"), EndDate = DateTime.Parse("2-1-2022")},
+                new Childbirth{ Notes = "More notes", StartDate= null, EndDate = null},
 
             };
             foreach (Childbirth p in childbirths)

@@ -6,6 +6,6 @@ namespace PregnancyDemoApp.Repositories
 {
     public interface IObstetricianRepository : IRepository<Obstetrician>
     {
-        Task<IReadOnlyCollection<Obstetrician>> GetObstetricianByPregnancyId(int pregnancyId);
+        Task<IReadOnlyCollection<Obstetrician>> GetObstetricianByPregnancy(int obId);
     }
 }

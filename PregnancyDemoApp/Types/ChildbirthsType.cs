@@ -1,6 +1,9 @@
 ﻿using GraphQL.Types;
+using Microsoft.EntityFrameworkCore;
+using PregnancyDemoApp.AppDbContext;
 using PregnancyDemoApp.Models;
 using PregnancyDemoApp.Repositories;
+using System;
 using System.Collections.Generic;
 
 namespace PregnancyDemoApp.Types
@@ -11,27 +14,31 @@ namespace PregnancyDemoApp.Types
         {
             Field(x => x.Id, type: typeof(IdGraphType)).Description("Childbirth Id");
             Field(x => x.Notes).Description("Birth notes");
-            Field(x => x.PregnancyId, type: typeof(IdGraphType)).Description("Pregnancy Id");
-            FieldAsync<PregnanciesType, Pregnancy>("pregnancy", resolve: ctx =>
-            {
-                return pregnancyRepository.GetById(ctx.Source.PregnancyId);
-            });
-            Field(x => x.StartDate).Description("Starting Date of Childbirth");
-            Field(x => x.EndDate).Description("Ending Date of Childbirth");
+            Field(x => x.StartDate, nullable: true).Description("Starting Date of Childbirth");
+            Field(x => x.EndDate, nullable: true).Description("Ending Date of Childbirth");
 
-            FieldAsync<ListGraphType<PersonsType>, IReadOnlyCollection<Person>>(
-                 "motherInfo", "returns mother info",
-                 resolve: context =>
-                 {
-                     return pregnancyRepository.GetMotherByPregnancyId(context.Source.PregnancyId);
-                 });
+            //FieldAsync<ListGraphType<PersonsType>, IReadOnlyCollection<Person>>(
+            //     "motherInfo", "returns mother info",
+            //     resolve: context =>
+            //     {
 
-            FieldAsync<ListGraphType<ObstetriciansType>, IReadOnlyCollection<Obstetrician>>(
-                 "obstetricianInfo", "returns obstetrician info",
-                 resolve: context =>
-                 {
-                     return obstetricianRepository.GetObstetricianByPregnancyId(context.Source.PregnancyId);
-                 });
+            //         Pregnancy aa = await mc.Pregnancies.FirstAsync(x => x.Id == context.Source.PregnancyId);
+
+            //         using (var mc = con())
+            //         {
+
+            //             var o = pregnancyRepository.GetById(context.Source.PregnancyId);
+            //         }
+            //         return pregnancyRepository.GetMotherByPregnancyId(o.Result.MotherId);
+            //     });
+
+            //FieldAsync<ListGraphType<ObstetriciansType>, IReadOnlyCollection<Obstetrician>>(
+            //     "obstetricianInfo", "returns obstetrician info",
+            //     resolve: context =>
+            //    {
+            //        var o = pregnancyRepository.GetById(context.Source.PregnancyId);
+            //        return obstetricianRepository.GetObstetricianByPregnancy(o.Result.ObstetricianId);
+            //    });
         }
     }
 }
