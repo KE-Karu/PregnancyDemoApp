@@ -42,24 +42,6 @@ namespace PregnancyDemoApp.AppDbContext
             context.SaveChanges();
 
 
-            if (context.Pregnancies.Any())
-            {
-                return;
-            }
-            var pregnancies = new Pregnancy[]
-            {
-                new Pregnancy{ MotherId = 3, ObstetricianId = 1, ChildbirthId = 1 , DueDate= DateTime.Parse("1-1-2022"), StartDate= DateTime.Parse("1-5-2021"), EndDate = DateTime.Parse("2-1-2022")},
-                new Pregnancy{ MotherId = 4, ObstetricianId = 2, ChildbirthId = 2 , DueDate= DateTime.Parse("2-2-2022"), StartDate = DateTime.Parse("1-6-2021"), EndDate = null},
-               
-            };
-            foreach (Pregnancy p in pregnancies)
-            {
-                context.Pregnancies.Add(p);
-            }
-            context.SaveChanges();
-
-
-
             if (context.Childbirths.Any())
             {
                 return;
@@ -73,6 +55,23 @@ namespace PregnancyDemoApp.AppDbContext
             foreach (Childbirth p in childbirths)
             {
                 context.Childbirths.Add(p);
+            }
+            context.SaveChanges();
+
+
+            if (context.Pregnancies.Any())
+            {
+                return;
+            }
+            var pregnancies = new Pregnancy[]
+            {
+                new Pregnancy{ MotherId = 3, ObstetricianId = 1, ChildbirthId = 1 , DueDate= DateTime.Parse("1-1-2022"), StartDate= DateTime.Parse("1-5-2021"), EndDate = DateTime.Parse("2-1-2022")},
+                new Pregnancy{ MotherId = 4, ObstetricianId = 2, ChildbirthId = 2 , DueDate= DateTime.Parse("2-2-2022"), StartDate = DateTime.Parse("1-6-2021"), EndDate = null},
+               
+            };
+            foreach (Pregnancy p in pregnancies)
+            {
+                context.Pregnancies.Add(p);
             }
             context.SaveChanges();
         }

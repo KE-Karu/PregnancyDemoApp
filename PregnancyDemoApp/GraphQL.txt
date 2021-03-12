@@ -1,1 +1,1 @@
-﻿
+﻿https://localhost:44312/graphql

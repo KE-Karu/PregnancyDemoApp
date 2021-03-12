@@ -10,7 +10,7 @@ using PregnancyDemoApp.AppDbContext;
 namespace PregnancyDemoApp.Migrations
 {
     [DbContext(typeof(PregnancyDbContext))]
-    [Migration("20210312220934_First")]
+    [Migration("20210312223811_First")]
     partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
