@@ -5,7 +5,7 @@ namespace PregnancyDemoApp.Models
     public class Pregnancy : Dates
     {
         //1-1 suhe
-        public int ChildbirthId { get; set; }
+        //public int ChildbirthId { get; set; }
         public Childbirth Childbirth { get; set; }
 
         //1 ema - mitu rasedust

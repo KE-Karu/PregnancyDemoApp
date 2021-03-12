@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PregnancyDemoApp.Models
 {
-    public class Obstetrician : Name
+    public class Obstetrician : UniqueEntityData
     {
         [Required]
         public int PersonId { get; set; }

@@ -4,8 +4,8 @@ namespace PregnancyDemoApp.Models
 {
     public class Dates : UniqueEntityData
     {
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
     }
 }
