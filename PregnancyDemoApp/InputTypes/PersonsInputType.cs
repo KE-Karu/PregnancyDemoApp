@@ -12,7 +12,6 @@ namespace PregnancyDemoApp.InputTypes
             Field<StringGraphType>("lastName");
             Field<StringGraphType>("address");
             Field<StringGraphType>("gender");
-            //Field<StringGraphType>("obstetrician");
         }
     }
 }

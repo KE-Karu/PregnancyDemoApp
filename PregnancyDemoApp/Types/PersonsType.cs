@@ -7,7 +7,7 @@ namespace PregnancyDemoApp.Types
 {
     public class PersonsType : ObjectGraphType<Person>
     {
-        public PersonsType(IPregnancyRepository pregnancyRepository)
+        public PersonsType(IPregnancyRepository pregnancyRepository, IObstetricianRepository obstetricianRepository)
         {
             Field(x => x.Id, type: typeof(IdGraphType)).Description("Persons Id");
             Field(x => x.NatIdNr).Description("Persons Unique National Identification Number");
@@ -19,17 +19,18 @@ namespace PregnancyDemoApp.Types
 
             FieldAsync<ListGraphType<PregnanciesType>, IReadOnlyCollection<Pregnancy>>(
                 "personalPregnancies", "returns list of all personal pregnancies",
-                resolve: context =>
+                resolve: async context =>
                 {
-                    return pregnancyRepository.GetPregnanciesByMotherId(context.Source.Id);
+                    return await pregnancyRepository.GetPregnanciesByMotherId(context.Source.Id);
                 });
 
-            //FieldAsync<ListGraphType<ChildbirthsType>, IReadOnlyCollection<Childbirth>>(
-            //    "personalBirths", "returns list of all personal childbirths",
-            //    resolve: context =>
-            //    {
-            //        return personRepository.GetBirthByPersonId(context.Source.Id);
-            //    });
+            FieldAsync<ListGraphType<ObstetriciansType>, IReadOnlyCollection<Obstetrician>>(
+                "personalObstetricians", "returns list of all personal obstetricians",
+                resolve: async context =>
+                {;
+                    int oo = pregnancyRepository.GetPregnancyByMotherId(context.Source.Id);
+                    return await obstetricianRepository.GetObstetricianById(oo);
+                });
         }
     }
 }

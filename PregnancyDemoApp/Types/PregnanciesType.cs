@@ -1,10 +1,6 @@
 ﻿using GraphQL.Types;
-using Microsoft.EntityFrameworkCore;
-using PregnancyDemoApp.AppDbContext;
 using PregnancyDemoApp.Models;
 using PregnancyDemoApp.Repositories;
-using System;
-using System.Collections.Generic;
 
 namespace PregnancyDemoApp.Types
 {

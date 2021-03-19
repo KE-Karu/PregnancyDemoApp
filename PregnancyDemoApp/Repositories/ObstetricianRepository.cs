@@ -12,11 +12,9 @@ namespace PregnancyDemoApp.Repositories
         private readonly PregnancyDbContext context;
         public ObstetricianRepository(PregnancyDbContext con) : base(con, con.Obstetricians) { context = con; }
 
-        public async Task<IReadOnlyCollection<Obstetrician>> GetObstetricianByPregnancy(int obId)
+
+        public async Task<IReadOnlyCollection<Obstetrician>> GetObstetricianById(int obId)
         {
-            //Obstetrician obs = new Obstetrician();
-            //var selected = obs.Pregnancies.Where(x => x.Id == obId);
-            //return selected;
             return await context.Obstetricians.Where(o => o.Id == obId).ToListAsync();
         }
     }

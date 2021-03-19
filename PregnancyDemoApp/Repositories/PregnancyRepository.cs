@@ -10,14 +10,8 @@ namespace PregnancyDemoApp.Repositories
     public sealed class PregnancyRepository : UniqueEntityRepository<Pregnancy>, IPregnancyRepository
     {
         private readonly PregnancyDbContext context;
-        //private List<Pregnancy> preg;
 
         public PregnancyRepository(PregnancyDbContext con) : base(con, con.Pregnancies) { context = con; }
-        
-        public async Task<IReadOnlyCollection<Person>> GetMotherByPregnancyId(int motherId)
-        {
-            return await context.Persons.Where(o => o.Id == motherId).ToListAsync();
-        }
 
         public async Task<IReadOnlyCollection<Pregnancy>> GetPregnanciesByMotherId(int motherId)
         {
@@ -27,6 +21,28 @@ namespace PregnancyDemoApp.Repositories
         public async Task<IReadOnlyCollection<Pregnancy>> GetPregnanciesByObstetricianId(int obId)
         {
             return await context.Pregnancies.Where(o => o.ObstetricianId == obId).ToListAsync();
+        }
+
+        public int GetPregnancyByBirthId(int birthId)
+        {
+            var bb = context.Pregnancies.FirstOrDefault(x => x.ChildbirthId == birthId);
+            if(bb is null)
+            {
+                //Not ideal
+                return 0;
+            }
+            return bb.MotherId;
+        }
+
+        public int GetPregnancyByMotherId(int momId)
+        {
+            var oo = context.Pregnancies.FirstOrDefault(x => x.MotherId == momId);
+            if(oo is null)
+            {
+                //Not ideal
+                return 0;
+            }
+            return oo.ObstetricianId;
         }
     }
 }

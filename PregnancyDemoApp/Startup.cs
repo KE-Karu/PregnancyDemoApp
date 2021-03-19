@@ -11,7 +11,6 @@ using PregnancyDemoApp.InputTypes;
 using PregnancyDemoApp.Mutations;
 using PregnancyDemoApp.Repositories;
 using PregnancyDemoApp.Schemas;
-using System;
 
 namespace PregnancyDemoApp
 {
@@ -30,9 +29,11 @@ namespace PregnancyDemoApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddTransient<PregnancyDbContext>();
             services.AddDbContext<PregnancyDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             //services.AddTransient<Func<PregnancyDbContext>>(options => () => options.GetService<PregnancyDbContext>());
+
 
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IChildbirthRepository, ChildbirthRepository>();

@@ -22,6 +22,7 @@ namespace PregnancyDemoApp.Types
                 {
                     return pregnancyRepository.GetPregnanciesByObstetricianId(context.Source.Id);
                 });
+
         }
     }
 }

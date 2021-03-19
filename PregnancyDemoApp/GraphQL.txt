@@ -1,1 +1,28 @@
 ﻿https://localhost:44312/graphql
+
+{persons{
+  address,
+  firstName,
+  lastName,
+  gender,
+  natIdNr
+  personalPregnancies{
+    dueDate,
+    startDate
+  	}
+  personalObstetricians{id}
+	}
+}
+
+{childbirth(id:2){
+  notes
+  startDate
+  endDate
+  mothersInfo{
+    natIdNr,
+    firstName,
+    lastName,
+    address
+  	}
+	}
+}

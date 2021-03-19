@@ -7,6 +7,8 @@ namespace PregnancyDemoApp.AppDbContext
     {
         public PregnancyDbContext(DbContextOptions<PregnancyDbContext> options) : base(options) { }
 
+        public PregnancyDbContext() { }
+
         public DbSet<Person> Persons { get; set; }
         public DbSet<Childbirth> Childbirths { get; set; }
         public DbSet<Pregnancy> Pregnancies { get; set; }
