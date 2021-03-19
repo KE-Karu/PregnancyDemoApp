@@ -10,19 +10,19 @@ namespace PregnancyDemoApp.Types
         {
             Field(x => x.Id, type: typeof(IdGraphType)).Description("Pregnancy Id");
             Field(x => x.MotherId, type: typeof(IdGraphType)).Description("Mother Id");
-            FieldAsync<PersonsType, Person>("mother", resolve: ctx =>
+            FieldAsync<PersonsType, Person>("mother", resolve: async ctx =>
             {
-                return personRepository.GetById(ctx.Source.MotherId);
+                return await personRepository.GetById(ctx.Source.MotherId);
             });
             Field(x => x.ObstetricianId, type: typeof(IdGraphType)).Description("Obstetrician Id");
-            FieldAsync<ObstetriciansType, Obstetrician>("obstetrician", resolve: ctx =>
+            FieldAsync<ObstetriciansType, Obstetrician>("obstetrician", resolve: async ctx =>
             {
-                return obstetricianRepository.GetById(ctx.Source.ObstetricianId);
+                return await obstetricianRepository.GetById(ctx.Source.ObstetricianId);
             });
             Field(x => x.ChildbirthId, type: typeof(IdGraphType)).Description("Birth Id");
-            FieldAsync<ChildbirthsType, Childbirth>("birth", resolve: ctx =>
+            FieldAsync<ChildbirthsType, Childbirth>("birth", resolve: async ctx =>
             {
-                return birthRepository.GetById(ctx.Source.ChildbirthId);
+                return await birthRepository.GetById(ctx.Source.ChildbirthId);
             });
             Field(x => x.StartDate, nullable:true).Description("Starting Date of Pregnancy");
             Field(x => x.EndDate, nullable: true).Description("Ending Date of Pregnancy");

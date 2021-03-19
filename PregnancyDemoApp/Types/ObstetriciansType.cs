@@ -11,16 +11,16 @@ namespace PregnancyDemoApp.Types
         {
             Field(x => x.Id, type: typeof(IdGraphType)).Description("Obestrician Id");
             Field(x => x.PersonId, type: typeof(IdGraphType)).Description("Person Id");
-            FieldAsync<PersonsType, Person>("obestrician", resolve: ctx =>
+            FieldAsync<PersonsType, Person>("obestrician", resolve: async ctx =>
             {
-                return personRepository.GetById(ctx.Source.PersonId);
+                return await personRepository.GetById(ctx.Source.PersonId);
             });
 
             FieldAsync<ListGraphType<PregnanciesType>, IReadOnlyCollection<Pregnancy>>(
                 "guidedPregnancies", "returns list of all personally guided pregnancies",
-                resolve: context =>
+                resolve: async context =>
                 {
-                    return pregnancyRepository.GetPregnanciesByObstetricianId(context.Source.Id);
+                    return await pregnancyRepository.GetPregnanciesByObstetricianId(context.Source.Id);
                 });
 
         }
