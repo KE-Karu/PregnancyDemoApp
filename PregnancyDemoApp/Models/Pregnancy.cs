@@ -2,8 +2,8 @@
 
 namespace PregnancyDemoApp.Models
 {
-    public class Pregnancy : Dates
-    {
+    public class Pregnancy : UniqueEntityData
+    { 
         //1-1 suhe
         public int ChildbirthId { get; set; }
         public Childbirth Childbirth { get; set; }

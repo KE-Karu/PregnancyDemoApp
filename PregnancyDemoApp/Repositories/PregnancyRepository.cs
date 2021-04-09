@@ -15,12 +15,16 @@ namespace PregnancyDemoApp.Repositories
 
         public async Task<IReadOnlyCollection<Pregnancy>> GetPregnanciesByMotherId(int motherId)
         {
-            return await context.Pregnancies.Where(o => o.MotherId == motherId).ToListAsync();
+            var query = context.Pregnancies.AsNoTracking().Where(o => o.Id == motherId);
+            return await query.ToListAsync();
+            //return await context.Pregnancies.Where(o => o.MotherId == motherId).ToListAsync();
         }
 
         public async Task<IReadOnlyCollection<Pregnancy>> GetPregnanciesByObstetricianId(int obId)
         {
-            return await context.Pregnancies.Where(o => o.ObstetricianId == obId).ToListAsync();
+            var query = context.Pregnancies.AsNoTracking().Where(o => o.Id == obId);
+            return await query.ToListAsync();
+            //return await context.Pregnancies.Where(o => o.ObstetricianId == obId).ToListAsync();
         }
 
         public int GetPregnancyByBirthId(int birthId)

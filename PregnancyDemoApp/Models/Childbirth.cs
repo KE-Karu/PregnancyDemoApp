@@ -1,4 +1,6 @@
-﻿namespace PregnancyDemoApp.Models
+﻿using System;
+
+namespace PregnancyDemoApp.Models
 {
     public class Childbirth : Dates
     {
@@ -12,5 +14,7 @@
         // 1-1 suhe rasedusega
         //public int PregnancyId { get; set; }
         public Pregnancy Pregnancy { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

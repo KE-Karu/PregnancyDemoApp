@@ -24,8 +24,6 @@ namespace PregnancyDemoApp.Types
             {
                 return await birthRepository.GetById(ctx.Source.ChildbirthId);
             });
-            Field(x => x.StartDate, nullable:true).Description("Starting Date of Pregnancy");
-            Field(x => x.EndDate, nullable: true).Description("Ending Date of Pregnancy");
             Field(x => x.DueDate).Description("Estimated Due Date");
         }
     }

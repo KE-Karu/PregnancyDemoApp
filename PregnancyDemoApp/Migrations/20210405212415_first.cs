@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PregnancyDemoApp.Migrations
 {
-    public partial class First : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,9 @@ namespace PregnancyDemoApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateOfDeath = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -30,11 +32,11 @@ namespace PregnancyDemoApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NatIdNr = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Gender = table.Column<int>(type: "int", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateOfDeath = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Sex = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,9 +72,7 @@ namespace PregnancyDemoApp.Migrations
                     MotherId = table.Column<int>(type: "int", nullable: false),
                     PersonId = table.Column<int>(type: "int", nullable: true),
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ObstetricianId = table.Column<int>(type: "int", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    ObstetricianId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -124,6 +124,7 @@ namespace PregnancyDemoApp.Migrations
                 name: "IX_Pregnancies_PersonId",
                 table: "Pregnancies",
                 column: "PersonId");
+            migrationBuilder.Sql(InsertPerson);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -140,5 +141,36 @@ namespace PregnancyDemoApp.Migrations
             migrationBuilder.DropTable(
                 name: "Persons");
         }
+        private const string InsertPerson = @"
+            CREATE PROCEDURE InsertPerson
+            (
+                @NatIdNr nvarchar(450),
+                @Address nvarchar(max),
+                @DateOfBirth datetime2,
+                @DateOfDeath datetime2,
+                @FirstName nvarchar(max),
+                @LastName nvarchar(max),
+                @Sex nvarchar(max)
+            )
+            AS
+                IF EXISTS (SELECT * FROM Persons WHERE NatIdNr = @NatIdNr)
+                BEGIN
+                    UPDATE Persons 
+                    SET 
+                        NatIdNr = @NatIdNr,
+                        Address = @Address,
+                        DateOfBirth = @DateOfBirth, 
+                        DateOfDeath = @DateOfDeath,
+                        FirstName = @FirstName, 
+                        LastName = @LastName,
+                        Sex = @Sex
+                    WHERE 
+                        NatIdNr =  @NatIdNr
+                END
+                ELSE
+                BEGIN
+                   INSERT into Persons 
+                   VALUES (@NatIdNr, @Address, @DateOfBirth, @DateOfDeath, @FirstName, @LastName, @Sex)
+                END";
     }
 }

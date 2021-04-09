@@ -14,7 +14,9 @@ namespace PregnancyDemoApp.Repositories
 
         public async Task<IReadOnlyCollection<Person>> GetPersonById(int momId)
         {
-            return await context.Persons.Where(x=>x.Id == momId).ToListAsync();
+            var query = context.Persons.AsNoTracking().Where(o => o.Id == momId);
+            return await query.ToListAsync();
+            //return await context.Persons.Where(x=>x.Id == momId).ToListAsync();
         }
     }
 }

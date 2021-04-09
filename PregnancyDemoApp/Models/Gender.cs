@@ -1,9 +1,10 @@
-﻿namespace PregnancyDemoApp.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PregnancyDemoApp.Models
 {
-    public enum Gender
+    public class Gender : Name
     {
-        Male,
-        Female,
-        Other
+        [Required]
+        public string Sex { get; set; }
     }
 }

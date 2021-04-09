@@ -23,8 +23,8 @@ namespace PregnancyDemoApp.Mutations
                 resolve: async context =>
                 {
                     var personInput = context.GetArgument<Person>("person");
-                    await personRepository.Add(personInput);
-                    return $"Person has been created succesfully.";
+                    return await personRepository.Add(personInput);
+                    //return $"Person has been created succesfully.";
 
                 }
             );
@@ -50,9 +50,11 @@ namespace PregnancyDemoApp.Mutations
                     personInfoRetrived.FirstName = personInput.FirstName;
                     personInfoRetrived.LastName = personInput.LastName;
                     personInfoRetrived.Address = personInput.Address;
-                    personInfoRetrived.Gender = personInput.Gender;
-                    await personRepository.Update(personInfoRetrived);
-                    return $"Person ID {personId} with Name {personInfoRetrived.FullName} has been updated succesfully.";
+                    personInfoRetrived.Sex = personInput.Sex;
+                    personInfoRetrived.DateOfBirth = personInput.DateOfBirth;
+                    personInfoRetrived.DateOfDeath = personInput.DateOfDeath;
+                    return await personRepository.Update(personInfoRetrived);
+                    // return $"Person ID {personId} with Name {personInfoRetrived.FullName} has been updated succesfully.";
                 }
             );
 
@@ -83,8 +85,8 @@ namespace PregnancyDemoApp.Mutations
                 resolve: async context =>
                 {
                     var birth = context.GetArgument<Childbirth>("childbirth");
-                    await birthRepository.Add(birth);
-                    return $"Childbirth has been created succesfully.";
+                    return await birthRepository.Add(birth);
+                    //return $"Childbirth has been created succesfully.";
                 }
             );
 
@@ -109,8 +111,8 @@ namespace PregnancyDemoApp.Mutations
                     //birthInfoRetrived.PregnancyId = birthInput.PregnancyId;
                     birthInfoRetrived.StartDate = birthInput.StartDate;
                     birthInfoRetrived.EndDate = birthInput.EndDate;
-                    await birthRepository.Update(birthInfoRetrived);
-                    return $"Childbirth ID {birthId} has been updated succesfully.";
+                    return await birthRepository.Update(birthInfoRetrived);
+                    //return $"Childbirth ID {birthId} has been updated succesfully.";
                 }
             );
 
@@ -141,8 +143,8 @@ namespace PregnancyDemoApp.Mutations
                 resolve: async context =>
                 {
                     var pregnancy = context.GetArgument<Pregnancy>("pregnancy");
-                    await pregnancyRepository.Add(pregnancy);
-                    return $"Pregnancy has been created succesfully.";
+                    return await pregnancyRepository.Add(pregnancy);
+                    //return $"Pregnancy has been created succesfully.";
                 }
             );
 
@@ -167,10 +169,8 @@ namespace PregnancyDemoApp.Mutations
                     pregnancyInfoRetrived.ObstetricianId = pregnancyInput.ObstetricianId;
                     pregnancyInfoRetrived.ChildbirthId = pregnancyInput.ChildbirthId;
                     pregnancyInfoRetrived.DueDate = pregnancyInput.DueDate;
-                    pregnancyInfoRetrived.StartDate = pregnancyInput.StartDate;
-                    pregnancyInfoRetrived.EndDate = pregnancyInput.EndDate;
-                    await pregnancyRepository.Update(pregnancyInfoRetrived);
-                    return $"Pregnancy ID {pregnancyId} has been updated succesfully.";
+                    return await pregnancyRepository.Update(pregnancyInfoRetrived);
+                    //return $"Pregnancy ID {pregnancyId} has been updated succesfully.";
                 }
             );
 
@@ -201,8 +201,8 @@ namespace PregnancyDemoApp.Mutations
                 resolve: async context =>
                 {
                     var obstetricianDisease = context.GetArgument<Obstetrician>("obstetrician");
-                    await obstetricianRepository.Add(obstetricianDisease);
-                    return $"Obstetrician has been created succesfully.";
+                    return await obstetricianRepository.Add(obstetricianDisease);
+                    //return $"Obstetrician has been created succesfully.";
                 }
             );
 
@@ -224,8 +224,8 @@ namespace PregnancyDemoApp.Mutations
                         return null;
                     }
                     obstetricianInfoRetrived.PersonId = obstetricianInput.PersonId;
-                    await obstetricianRepository.Update(obstetricianInfoRetrived);
-                    return $"Obstetrician ID {obstetricianId} has been updated succesfully.";
+                    return await obstetricianRepository.Update(obstetricianInfoRetrived);
+                    //return $"Obstetrician ID {obstetricianId} has been updated succesfully.";
                 }
             );
 

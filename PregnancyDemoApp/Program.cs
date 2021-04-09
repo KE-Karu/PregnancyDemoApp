@@ -15,7 +15,7 @@ namespace PregnancyDemoApp
             {
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<PregnancyDbContext>();
-                DbInitializer.Initialize(context);
+                //DbInitializer.Initialize(context);
             }
             host.Run();
         }

@@ -28,8 +28,12 @@ namespace PregnancyDemoApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
             services.AddTransient<PregnancyDbContext>();
+            services.AddRazorPages();
+
+            //services.AddEntityFrameworkNpgsql().AddDbContext<PregnancyDbContext>(opt =>
+            //    opt.UseNpgsql(Configuration.GetConnectionString("PostConnection")));
+
             services.AddDbContext<PregnancyDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             //services.AddTransient<Func<PregnancyDbContext>>(options => () => options.GetService<PregnancyDbContext>());

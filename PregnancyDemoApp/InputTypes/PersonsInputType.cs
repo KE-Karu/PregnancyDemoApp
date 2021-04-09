@@ -11,7 +11,9 @@ namespace PregnancyDemoApp.InputTypes
             Field<StringGraphType>("firstName");
             Field<StringGraphType>("lastName");
             Field<StringGraphType>("address");
-            Field<StringGraphType>("gender");
+            Field<StringGraphType>("sex");
+            Field<DateGraphType>("dateOfBirth");
+            Field<DateGraphType>("dateOfDeath");
         }
     }
 }

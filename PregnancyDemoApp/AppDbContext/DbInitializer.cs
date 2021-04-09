@@ -14,10 +14,10 @@ namespace PregnancyDemoApp.AppDbContext
             }
             var persons = new Person[]
             {
-                new Person{ NatIdNr = "34501234215 ", FirstName = "Ants", LastName= "Mustikas", Address = "Viru 10", Gender = Gender.Male},
-                new Person{ NatIdNr = "39502114232", FirstName = "Tõnu", LastName= "Vaarikas", Address = "Maardu 25", Gender = Gender.Male},
-                new Person{ NatIdNr = "49403136515", FirstName = "Mari", LastName= "Maasikas", Address = "Lepa 32", Gender = Gender.Female},
-                new Person{ NatIdNr = "49502414215", FirstName = "Kati", LastName= "Sõstar", Address = "Sinivälja 46", Gender = Gender.Female}
+                new Person{ NatIdNr = "34501234215 ", FirstName = "Ants", LastName= "Mustikas", Address = "Viru 10", Sex = "Male"},
+                new Person{ NatIdNr = "39502114232", FirstName = "Tõnu", LastName= "Vaarikas", Address = "Maardu 25", Sex = "Male"},
+                new Person{ NatIdNr = "49403136515", FirstName = "Mari", LastName= "Maasikas", Address = "Lepa 32", Sex = "Female"},
+                new Person{ NatIdNr = "49502414215", FirstName = "Kati", LastName= "Sõstar", Address = "Sinivälja 46", Sex = "Female"}
             };
             foreach (Person p in persons)
             {
@@ -65,9 +65,9 @@ namespace PregnancyDemoApp.AppDbContext
             }
             var pregnancies = new Pregnancy[]
             {
-                new Pregnancy{ MotherId = 3, ObstetricianId = 1, ChildbirthId = 1 , DueDate= DateTime.Parse("1-1-2022"), StartDate= DateTime.Parse("1-5-2021"), EndDate = DateTime.Parse("2-1-2022")},
-                new Pregnancy{ MotherId = 4, ObstetricianId = 2, ChildbirthId = 2 , DueDate= DateTime.Parse("2-2-2022"), StartDate = DateTime.Parse("1-6-2021"), EndDate = null},
-               
+                new Pregnancy{ MotherId = 3, ObstetricianId = 1, ChildbirthId = 1 , DueDate= DateTime.Parse("1-1-2022")},
+                new Pregnancy{ MotherId = 4, ObstetricianId = 2, ChildbirthId = 2 , DueDate= DateTime.Parse("2-2-2022")},
+
             };
             foreach (Pregnancy p in pregnancies)
             {
