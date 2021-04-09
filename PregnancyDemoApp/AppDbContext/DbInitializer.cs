@@ -4,10 +4,10 @@ using System.Linq;
 
 namespace PregnancyDemoApp.AppDbContext
 {
-    //public class DbInitializer
-    //{
-    //    public static void Initialize(PregnancyDbContext context)
-    //    {
+    public class DbInitializer
+    {
+        public static void Initialize(PregnancyDbContext context)
+        {
     //        if (context.Persons.Any())
     //        {
     //            return;
@@ -74,6 +74,6 @@ namespace PregnancyDemoApp.AppDbContext
     //            context.Pregnancies.Add(p);
     //        }
     //        context.SaveChanges();
-    //    }
-    //}
+        }
+    }
 }

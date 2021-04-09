@@ -8,23 +8,6 @@ namespace PregnancyDemoApp.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Childbirths",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateOfDeath = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Childbirths", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Persons",
                 columns: table => new
                 {
@@ -33,7 +16,6 @@ namespace PregnancyDemoApp.Migrations
                     NatIdNr = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateOfDeath = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Sex = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -68,34 +50,45 @@ namespace PregnancyDemoApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ChildbirthId = table.Column<int>(type: "int", nullable: false),
-                    MotherId = table.Column<int>(type: "int", nullable: false),
-                    PersonId = table.Column<int>(type: "int", nullable: true),
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ObstetricianId = table.Column<int>(type: "int", nullable: false)
+                    ObstetricianId = table.Column<int>(type: "int", nullable: true),
+                    PersonId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pregnancies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pregnancies_Childbirths_ChildbirthId",
-                        column: x => x.ChildbirthId,
-                        principalTable: "Childbirths",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Pregnancies_Obstetricians_ObstetricianId",
-                        column: x => x.ObstetricianId,
-                        principalTable: "Obstetricians",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Pregnancies_Persons_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Persons",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Childbirths",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PregnancyId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Childbirths", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Childbirths_Pregnancies_PregnancyId",
+                        column: x => x.PregnancyId,
+                        principalTable: "Pregnancies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Childbirths_PregnancyId",
+                table: "Childbirths",
+                column: "PregnancyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Obstetricians_PersonId",
@@ -110,12 +103,6 @@ namespace PregnancyDemoApp.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pregnancies_ChildbirthId",
-                table: "Pregnancies",
-                column: "ChildbirthId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Pregnancies_ObstetricianId",
                 table: "Pregnancies",
                 column: "ObstetricianId");
@@ -124,16 +111,15 @@ namespace PregnancyDemoApp.Migrations
                 name: "IX_Pregnancies_PersonId",
                 table: "Pregnancies",
                 column: "PersonId");
-            migrationBuilder.Sql(InsertPerson);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Pregnancies");
+                name: "Childbirths");
 
             migrationBuilder.DropTable(
-                name: "Childbirths");
+                name: "Pregnancies");
 
             migrationBuilder.DropTable(
                 name: "Obstetricians");
@@ -141,36 +127,5 @@ namespace PregnancyDemoApp.Migrations
             migrationBuilder.DropTable(
                 name: "Persons");
         }
-        private const string InsertPerson = @"
-            CREATE PROCEDURE InsertPerson
-            (
-                @NatIdNr nvarchar(450),
-                @Address nvarchar(max),
-                @DateOfBirth datetime2,
-                @DateOfDeath datetime2,
-                @FirstName nvarchar(max),
-                @LastName nvarchar(max),
-                @Sex nvarchar(max)
-            )
-            AS
-                IF EXISTS (SELECT * FROM Persons WHERE NatIdNr = @NatIdNr)
-                BEGIN
-                    UPDATE Persons 
-                    SET 
-                        NatIdNr = @NatIdNr,
-                        Address = @Address,
-                        DateOfBirth = @DateOfBirth, 
-                        DateOfDeath = @DateOfDeath,
-                        FirstName = @FirstName, 
-                        LastName = @LastName,
-                        Sex = @Sex
-                    WHERE 
-                        NatIdNr =  @NatIdNr
-                END
-                ELSE
-                BEGIN
-                   INSERT into Persons 
-                   VALUES (@NatIdNr, @Address, @DateOfBirth, @DateOfDeath, @FirstName, @LastName, @Sex)
-                END";
     }
 }

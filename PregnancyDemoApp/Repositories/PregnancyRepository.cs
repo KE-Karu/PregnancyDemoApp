@@ -27,20 +27,20 @@ namespace PregnancyDemoApp.Repositories
             //return await context.Pregnancies.Where(o => o.ObstetricianId == obId).ToListAsync();
         }
 
-        public int GetPregnancyByBirthId(int birthId)
+        public int GetPregnancyByBirthId(int pregnancyId)
         {
-            var bb = context.Pregnancies.FirstOrDefault(x => x.ChildbirthId == birthId);
+            var bb = context.Pregnancies.FirstOrDefault(x => x.Id == pregnancyId);
             if(bb is null)
             {
                 //Not ideal
                 return 0;
             }
-            return bb.MotherId;
+            return bb.PersonId;
         }
 
         public int GetPregnancyByMotherId(int momId)
         {
-            var oo = context.Pregnancies.FirstOrDefault(x => x.MotherId == momId);
+            var oo = context.Pregnancies.FirstOrDefault(x => x.PersonId == momId);
             if(oo is null)
             {
                 //Not ideal

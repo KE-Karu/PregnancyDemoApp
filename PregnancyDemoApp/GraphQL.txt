@@ -1,10 +1,12 @@
 ﻿https://localhost:44312/graphql
+http://localhost:9458/graphql
+
 
 {persons{
   address,
   firstName,
   lastName,
-  gender,
+  sex,
   natIdNr
   personalPregnancies{
     dueDate,
@@ -12,6 +14,14 @@
   	}
   personalObstetricians{id}
 	}
+}
+
+{childbirths{
+    id
+    notes
+    pregnancyId
+    mothersInfo{lastName,firstName,dateOfBirth}
+    }
 }
 
 {childbirth(id:2){
@@ -26,3 +36,83 @@
   	}
 	}
 }
+
+mutation($person : AddPersonInput!){  
+  createPerson(person : $person){
+    firstName,
+    natIdNr,
+    lastName
+    address,
+    sex,
+    dateOfBirth
+    }  
+  }
+
+  {"person": {
+  "address": "Fantoft",
+  "firstName": "Mati",
+  "lastName": "Nuude",
+  "natIdNr": "39222211111",
+  "sex": "Male",
+  "dateOfBirth": "2021-01-01"
+    }
+}
+
+
+mutation($obstetrician : AddObstetricianInput!){  
+  addObstetrician(obstetrician : $obstetrician){
+    personId
+    }  
+  }
+
+{"obstetrician": {
+  "personId": 19
+    }
+}
+
+{obstetricians{
+  id,
+  obestrician{
+    firstName,
+    lastName
+        }
+	}
+}
+
+
+mutation($pregnancies : AddPregnancyInput!){
+    addPregnancy(pregnancy : $pregnancies){
+        personId,
+        obstetricianId,
+        dueDate,
+    }
+}
+
+{"$pregnancies": {
+  "motherId": 9,
+  "obsetricianId": 19,
+  "dueDate": "2021-05-05"
+    }
+}
+
+{pregnancy(id:3){
+  mother{
+    natIdNr,
+    firstName,
+    lastName,
+  	}
+  	obstetrician{id,obestrician{firstName,lastName}}
+}
+}
+
+mutation($childbirth : AddBirthInput!){  
+  addChildbirth(childbirth : $childbirth){
+    notes,
+    pregnancyId,
+    }  
+  }
+
+  {"childbirth": {
+    "notes": "All went well",
+    "pregnancyId": 3
+}}

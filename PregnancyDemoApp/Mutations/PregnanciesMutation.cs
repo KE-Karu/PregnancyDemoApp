@@ -51,7 +51,7 @@ namespace PregnancyDemoApp.Mutations
                     personInfoRetrived.LastName = personInput.LastName;
                     personInfoRetrived.Address = personInput.Address;
                     personInfoRetrived.Sex = personInput.Sex;
-                    //personInfoRetrived.DateOfBirth = personInput.DateOfBirth;
+                    personInfoRetrived.DateOfBirth = personInput.DateOfBirth;
                     //personInfoRetrived.DateOfDeath = personInput.DateOfDeath;
                     return await personRepository.Update(personInfoRetrived);
                     // return $"Person ID {personId} with Name {personInfoRetrived.FullName} has been updated succesfully.";
@@ -108,7 +108,7 @@ namespace PregnancyDemoApp.Mutations
                         return null;
                     }
                     birthInfoRetrived.Notes = birthInput.Notes;
-                    //birthInfoRetrived.PregnancyId = birthInput.PregnancyId;
+                    birthInfoRetrived.PregnancyId = birthInput.PregnancyId;
                     //birthInfoRetrived.StartDate = birthInput.StartDate;
                     //birthInfoRetrived.EndDate = birthInput.EndDate;
                     return await birthRepository.Update(birthInfoRetrived);
@@ -165,10 +165,10 @@ namespace PregnancyDemoApp.Mutations
                         context.Errors.Add(new ExecutionError("Couldn't find Pregnancy info."));
                         return null;
                     }
-                    pregnancyInfoRetrived.MotherId = pregnancyInput.MotherId;
+                    pregnancyInfoRetrived.PersonId = pregnancyInput.PersonId;
                     pregnancyInfoRetrived.ObstetricianId = pregnancyInput.ObstetricianId;
-                    pregnancyInfoRetrived.ChildbirthId = pregnancyInput.ChildbirthId;
-                    //pregnancyInfoRetrived.DueDate = pregnancyInput.DueDate;
+                    //pregnancyInfoRetrived.ChildbirthId = pregnancyInput.ChildbirthId;
+                    pregnancyInfoRetrived.DueDate = pregnancyInput.DueDate;
                     return await pregnancyRepository.Update(pregnancyInfoRetrived);
                     //return $"Pregnancy ID {pregnancyId} has been updated succesfully.";
                 }

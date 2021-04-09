@@ -15,7 +15,7 @@ namespace PregnancyDemoApp.Types
             Field(x => x.LastName).Description("Persons Last Name");
             Field(x => x.Address).Description("Persons Current Address");
             Field(x => x.Sex).Description("Gender of the Person");
-            //Field(x => x.DateOfBirth).Description("Persons Date of Birth");
+            Field(x => x.DateOfBirth).Description("Persons Date of Birth");
             //Field(x => x.DateOfDeath, nullable: true).Description("Persons Date of Death");
 
             FieldAsync<ListGraphType<PregnanciesType>, IReadOnlyCollection<Pregnancy>>(

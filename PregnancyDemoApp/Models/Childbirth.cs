@@ -2,7 +2,7 @@
 
 namespace PregnancyDemoApp.Models
 {
-    public class Childbirth : Dates
+    public class Childbirth : UniqueEntityData
     {
         //public int MotherId { get; set; }
         //public Person Person { get; set; }
@@ -12,7 +12,7 @@ namespace PregnancyDemoApp.Models
 
         public string Notes { get; set; }
         // 1-1 suhe rasedusega
-        //public int PregnancyId { get; set; }
+        public int PregnancyId { get; set; }
         public Pregnancy Pregnancy { get; set; }
         //public DateTime? StartDate { get; set; }
         //public DateTime? EndDate { get; set; }

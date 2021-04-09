@@ -11,6 +11,8 @@ namespace PregnancyDemoApp.Types
         {
             Field(x => x.Id, type: typeof(IdGraphType)).Description("Childbirth Id");
             Field(x => x.Notes).Description("Birth notes");
+            Field(x => x.PregnancyId, type: typeof(IdGraphType)).Description("Pregnancy Id");
+
             //Field(x => x.StartDate, nullable: true).Description("Starting Date of Childbirth");
             //Field(x => x.EndDate, nullable: true).Description("Ending Date of Childbirth");
 
@@ -18,7 +20,7 @@ namespace PregnancyDemoApp.Types
                  "mothersInfo", "returns mother personal info",
                  resolve: async context =>
                  {
-                     int vv = pregnancyRepository.GetPregnancyByBirthId(context.Source.Id);
+                     int vv = pregnancyRepository.GetPregnancyByBirthId(context.Source.PregnancyId);
                      return await personRepository.GetPersonById(vv);
                  });
         }

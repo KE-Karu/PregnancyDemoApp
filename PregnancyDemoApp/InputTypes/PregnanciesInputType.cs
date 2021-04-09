@@ -7,10 +7,10 @@ namespace PregnancyDemoApp.InputTypes
         public PregnanciesInputType()
         {
             Name = "AddPregnancyInput";
-            Field<NonNullGraphType<IntGraphType>>("childbirthId");
-            Field<NonNullGraphType<IntGraphType>>("motherId");
-            Field<NonNullGraphType<IntGraphType>>("obstetricianId");
-            //Field<DateGraphType>("dueDate");
+
+            Field<NonNullGraphType<IntGraphType>>("personId");
+            Field<IntGraphType>("obstetricianId");
+            Field<DateGraphType>("dueDate");
         }
     }
 }

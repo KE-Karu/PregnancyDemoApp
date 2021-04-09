@@ -26,22 +26,15 @@ namespace PregnancyDemoApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateOfDeath")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("PregnancyId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PregnancyId");
 
                     b.ToTable("Childbirths");
                 });
@@ -77,9 +70,6 @@ namespace PregnancyDemoApp.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateOfDeath")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
@@ -109,31 +99,33 @@ namespace PregnancyDemoApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ChildbirthId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("MotherId")
-                        .HasColumnType("int");
 
                     b.Property<int>("ObstetricianId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PersonId")
+                    b.Property<int>("PersonId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ChildbirthId")
-                        .IsUnique();
 
                     b.HasIndex("ObstetricianId");
 
                     b.HasIndex("PersonId");
 
                     b.ToTable("Pregnancies");
+                });
+
+            modelBuilder.Entity("PregnancyDemoApp.Models.Childbirth", b =>
+                {
+                    b.HasOne("PregnancyDemoApp.Models.Pregnancy", "Pregnancy")
+                        .WithMany("Births")
+                        .HasForeignKey("PregnancyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pregnancy");
                 });
 
             modelBuilder.Entity("PregnancyDemoApp.Models.Obstetrician", b =>
@@ -149,12 +141,6 @@ namespace PregnancyDemoApp.Migrations
 
             modelBuilder.Entity("PregnancyDemoApp.Models.Pregnancy", b =>
                 {
-                    b.HasOne("PregnancyDemoApp.Models.Childbirth", "Childbirth")
-                        .WithOne("Pregnancy")
-                        .HasForeignKey("PregnancyDemoApp.Models.Pregnancy", "ChildbirthId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PregnancyDemoApp.Models.Obstetrician", "Obstetrician")
                         .WithMany("Pregnancies")
                         .HasForeignKey("ObstetricianId")
@@ -163,18 +149,13 @@ namespace PregnancyDemoApp.Migrations
 
                     b.HasOne("PregnancyDemoApp.Models.Person", "Person")
                         .WithMany("Pregnancies")
-                        .HasForeignKey("PersonId");
-
-                    b.Navigation("Childbirth");
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Obstetrician");
 
                     b.Navigation("Person");
-                });
-
-            modelBuilder.Entity("PregnancyDemoApp.Models.Childbirth", b =>
-                {
-                    b.Navigation("Pregnancy");
                 });
 
             modelBuilder.Entity("PregnancyDemoApp.Models.Obstetrician", b =>
@@ -187,6 +168,11 @@ namespace PregnancyDemoApp.Migrations
                     b.Navigation("Obstetrician");
 
                     b.Navigation("Pregnancies");
+                });
+
+            modelBuilder.Entity("PregnancyDemoApp.Models.Pregnancy", b =>
+                {
+                    b.Navigation("Births");
                 });
 #pragma warning restore 612, 618
         }
