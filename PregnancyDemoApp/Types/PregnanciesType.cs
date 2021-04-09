@@ -24,7 +24,7 @@ namespace PregnancyDemoApp.Types
             {
                 return await birthRepository.GetById(ctx.Source.ChildbirthId);
             });
-            Field(x => x.DueDate).Description("Estimated Due Date");
+            //Field(x => x.DueDate).Description("Estimated Due Date");
         }
     }
 }

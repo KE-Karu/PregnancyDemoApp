@@ -11,8 +11,8 @@ namespace PregnancyDemoApp.Types
         {
             Field(x => x.Id, type: typeof(IdGraphType)).Description("Childbirth Id");
             Field(x => x.Notes).Description("Birth notes");
-            Field(x => x.StartDate, nullable: true).Description("Starting Date of Childbirth");
-            Field(x => x.EndDate, nullable: true).Description("Ending Date of Childbirth");
+            //Field(x => x.StartDate, nullable: true).Description("Starting Date of Childbirth");
+            //Field(x => x.EndDate, nullable: true).Description("Ending Date of Childbirth");
 
             FieldAsync<ListGraphType<PersonsType>, IReadOnlyCollection<Person>>(
                  "mothersInfo", "returns mother personal info",

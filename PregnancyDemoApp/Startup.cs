@@ -86,7 +86,7 @@ namespace PregnancyDemoApp
             app.UseGraphQL<PregnanciesSchema>("/graphql");
             // use graphql-playground middleware at default path /ui/playground
             //app.UseGraphQLPlayground();
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();

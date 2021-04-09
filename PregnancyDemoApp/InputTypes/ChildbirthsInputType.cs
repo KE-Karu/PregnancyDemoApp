@@ -8,8 +8,8 @@ namespace PregnancyDemoApp.InputTypes
         {
             Name = "AddBirthInput";
             Field<StringGraphType>("notes");
-            Field<DateGraphType>("startDate");
-            Field<DateGraphType>("endDate");
+            //Field<DateGraphType>("startDate");
+            //Field<DateGraphType>("endDate");
         }
     }
 }

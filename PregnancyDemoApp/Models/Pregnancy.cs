@@ -12,7 +12,7 @@ namespace PregnancyDemoApp.Models
         public int MotherId { get; set; }
         public Person Person { get; set; }
 
-        public DateTime DueDate { get; set; }
+        //public DateTime DueDate { get; set; }
 
         //1 arst - mitu sünnitust
         public int ObstetricianId { get; set; }

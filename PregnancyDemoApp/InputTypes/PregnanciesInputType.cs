@@ -10,7 +10,7 @@ namespace PregnancyDemoApp.InputTypes
             Field<NonNullGraphType<IntGraphType>>("childbirthId");
             Field<NonNullGraphType<IntGraphType>>("motherId");
             Field<NonNullGraphType<IntGraphType>>("obstetricianId");
-            Field<DateGraphType>("dueDate");
+            //Field<DateGraphType>("dueDate");
         }
     }
 }
