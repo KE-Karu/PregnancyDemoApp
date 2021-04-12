@@ -52,7 +52,7 @@ namespace PregnancyDemoApp.Mutations
                     personInfoRetrived.Address = personInput.Address;
                     personInfoRetrived.Sex = personInput.Sex;
                     personInfoRetrived.DateOfBirth = personInput.DateOfBirth;
-                    //personInfoRetrived.DateOfDeath = personInput.DateOfDeath;
+                    personInfoRetrived.DateOfDeath = personInput.DateOfDeath;
                     return await personRepository.Update(personInfoRetrived);
                     // return $"Person ID {personId} with Name {personInfoRetrived.FullName} has been updated succesfully.";
                 }

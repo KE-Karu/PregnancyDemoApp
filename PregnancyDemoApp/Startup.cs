@@ -30,7 +30,10 @@ namespace PregnancyDemoApp
         {
             services.AddTransient<PregnancyDbContext>();
             services.AddRazorPages();
-
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
             //services.AddEntityFrameworkNpgsql().AddDbContext<PregnancyDbContext>(opt =>
             //    opt.UseNpgsql(Configuration.GetConnectionString("PostConnection")));
 
@@ -90,7 +93,7 @@ namespace PregnancyDemoApp
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseCors(options => options.AllowAnyOrigin());
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

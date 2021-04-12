@@ -23,10 +23,10 @@ namespace PregnancyDemoApp.AppDbContext
         public static void InitializeTables(ModelBuilder builder)
         {
             if (builder is null) return;;
-            builder.Entity<Person>().HasIndex(a => a.NatIdNr).IsUnique();
-            builder.Entity<Childbirth>().ToTable(nameof(Childbirths));
-            builder.Entity<Pregnancy>().ToTable(nameof(Pregnancies)).HasMany(x=>x.Births).WithOne(x=>x.Pregnancy).OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<Obstetrician>().ToTable(nameof(Obstetricians)).HasOne(x => x.Person);
+            //builder.Entity<Person>().HasIndex(a => a.NatIdNr).IsUnique();
+            //builder.Entity<Childbirth>().ToTable(nameof(Childbirths));
+            //builder.Entity<Pregnancy>().ToTable(nameof(Pregnancies)).HasMany(x=>x.Births).WithOne(x=>x.Pregnancy).OnDelete(DeleteBehavior.Cascade);
+            //builder.Entity<Obstetrician>().ToTable(nameof(Obstetricians)).HasOne(x => x.Person);
         }
     }   
 }
